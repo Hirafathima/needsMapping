@@ -125,7 +125,7 @@ for i in map_data['District']:
 # print(p)
 map_data['basic'], map_data['count_basic'], map_data['std'], map_data['count_std'], map_data['prm'], map_data['count_prm'] =basic, count_basic, std, count_std, prm, count_prm
 map_data['basic_link'], map_data['std_link'], map_data['prm_link'] = basic_link, std_link, prm_link
- map_data.to_csv('rest_locations.csv')
+map_data.to_csv('rest_locations.csv')
 
 
 
