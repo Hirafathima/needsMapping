@@ -156,7 +156,7 @@ def send_link():
 
 @app.route('/map.html')
 def show_map():
-   data= pd.read_csv('./data_file.csv')
+    data= pd.read_csv('./data_file.csv')
     Rest_locations= pd.read_csv('./rest_locations.csv')
     data = pd.DataFrame({
     'lat':Rest_locations['lat'],
