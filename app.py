@@ -97,7 +97,7 @@ for i in map_data['District']:
     y=list(m[i]['basic'].keys())
     basic.append(y[0])
     basic_link.append(example.link[0]['basic'][y[0]])
-    count_basic.append(m[i]['basic'][y[0]])
+    count_basic.append(int(m[i]['basic'][y[0]]))
     r[y[0]] = example.link[0]['basic'][y[0]]
     q['basic'] = r
     r={}
@@ -107,7 +107,7 @@ for i in map_data['District']:
     y = list(m[i]['Standard'].keys())
     std.append(y[0])
     std_link.append(example.link[1]['standard'][y[0]])
-    count_std.append(m[i]['Standard'][y[0]])
+    count_std.append(int(m[i]['Standard'][y[0]]))
     r[y[0]] = example.link[1]['standard'][y[0]]
     q['standard'] = r
     r={}
@@ -116,7 +116,7 @@ for i in map_data['District']:
     y = list(m[i]['Premium'].keys())
     prm.append(y[0])
     prm_link.append(example.link[2]['premium'][y[0]])
-    count_prm.append(m[i]['Premium'][y[0]])
+    count_prm.append(int(m[i]['Premium'][y[0]]))
     r[y[0]] = example.link[2]['premium'][y[0]]
     q['premium'] = r
 
@@ -125,7 +125,7 @@ for i in map_data['District']:
 # print(p)
 map_data['basic'], map_data['count_basic'], map_data['std'], map_data['count_std'], map_data['prm'], map_data['count_prm'] =basic, count_basic, std, count_std, prm, count_prm
 map_data['basic_link'], map_data['std_link'], map_data['prm_link'] = basic_link, std_link, prm_link
-# map_data.to_csv('rest_locations.csv')
+ map_data.to_csv('rest_locations.csv')
 
 
 
@@ -157,7 +157,7 @@ def send_link():
 @app.route('/map.html')
 def show_map():
 #     data= pd.read_csv('./data_file.csv')
-    Rest_locations= map_data
+    Rest_locations= pd.read_csv('./rest_locations.csv')
     data = pd.DataFrame({
     'lat':Rest_locations['lat'],
     'lon':Rest_locations['lon'],
