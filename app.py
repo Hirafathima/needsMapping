@@ -144,10 +144,10 @@ def send_data():
     app_json = json.dumps(m)
     return app_json
 
-# @app.route('/get_links')
-# def send_data():
-#     app_json = json.dumps(p)
-#     return app_json
+@app.route('/get_links')
+def send_link():
+    app_link_json = json.dumps(p)
+    return app_link_json
 
 
 
