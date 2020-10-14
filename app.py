@@ -13,34 +13,34 @@ import random
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import json
 from flask_cors import CORS
-# with open("objects.py","r") as outfile:
-#     example = __import__('objects')
+with open("objects.py","r") as outfile:
+    example = __import__('objects')
 app = Flask(__name__)
 CORS(app, resources={r"/get_dept/*": {"origins": "*"}})
 
-# url = "https://jsonbox.io/box_de8dc85dd983aa1882e2"
-# r = requests.get(url)
-# data = r.json()
-# print(data)
-# import csv
+url = "https://jsonbox.io/box_de8dc85dd983aa1882e2"
+r = requests.get(url)
+data = r.json()
+print(data)
+import csv
 
-# data_file = open('data_file.csv', 'w')
-# csv_writer = csv.writer(data_file)
-# count = 0
+data_file = open('data_file.csv', 'w')
+csv_writer = csv.writer(data_file)
+count = 0
 
-# for emp in data:
-#     if count == 0:
-#         # Writing headers of CSV file
-#         header = emp.keys()
-#         csv_writer.writerow(header)
-#         count += 1
+for emp in data:
+    if count == 0:
+        # Writing headers of CSV file
+        header = emp.keys()
+        csv_writer.writerow(header)
+        count += 1
 
-#     # Writing data of CSV file
-#     csv_writer.writerow(emp.values())
+    # Writing data of CSV file
+    csv_writer.writerow(emp.values())
 
-# data_file.close()
+data_file.close()
 pd.pandas.set_option('display.max_columns', None)
-data= pd.read_csv('./CitizenNeeds.csv')
+data= pd.read_csv('./data_file.csv')
 locations=pd.DataFrame({"District":data['district'].unique()})
 locations['District']=locations['District'].apply(lambda x: "" + str(x))
 lat_lon=[]
@@ -144,10 +144,10 @@ def send_data():
     app_json = json.dumps(m)
     return app_json
 
-@app.route('/get_links')
-def send_data():
-    app_json = json.dumps(p)
-    return app_json
+# @app.route('/get_links')
+# def send_data():
+#     app_json = json.dumps(p)
+#     return app_json
 
 
 
