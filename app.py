@@ -97,7 +97,7 @@ for i in map_data['District']:
     y=list(m[i]['basic'].keys())
     basic.append(y[0])
     basic_link.append(example.link[0]['basic'][y[0]])
-    count_basic.append(int(m[i]['basic'][y[0]]))
+    count_basic.append(m[i]['basic'][y[0]])
     r[y[0]] = example.link[0]['basic'][y[0]]
     q['basic'] = r
     r={}
@@ -107,7 +107,7 @@ for i in map_data['District']:
     y = list(m[i]['Standard'].keys())
     std.append(y[0])
     std_link.append(example.link[1]['standard'][y[0]])
-    count_std.append(int(m[i]['Standard'][y[0]]))
+    count_std.append(m[i]['Standard'][y[0]])
     r[y[0]] = example.link[1]['standard'][y[0]]
     q['standard'] = r
     r={}
@@ -116,7 +116,7 @@ for i in map_data['District']:
     y = list(m[i]['Premium'].keys())
     prm.append(y[0])
     prm_link.append(example.link[2]['premium'][y[0]])
-    count_prm.append(int(m[i]['Premium'][y[0]]))
+    count_prm.append(m[i]['Premium'][y[0]])
     r[y[0]] = example.link[2]['premium'][y[0]]
     q['premium'] = r
 
@@ -174,7 +174,7 @@ def show_map():
         folium.Circle(
             location=[data.iloc[i]['lat'], data.iloc[i]['lon']],
             popup=data.iloc[i]['name'] + ' : ' + data.iloc[i]['basic'],
-            radius=data.iloc[i]['value_b']*1000,
+            radius=int(data.iloc[i]['value_b'])*1000,
             color='crimson',
             fill=True,
             fill_color='crimson'
@@ -182,7 +182,7 @@ def show_map():
         folium.Circle(
             location=[data.iloc[i]['lat']+0.2, data.iloc[i]['lon']+0.2],
             popup=data.iloc[i]['name'] + ' : ' + data.iloc[i]['std'],
-            radius=data.iloc[i]['value_s']*500,
+            radius=int(data.iloc[i]['value_s'])*500,
             color='blue',
             fill=True,
             fill_color='blue'
@@ -190,7 +190,7 @@ def show_map():
         folium.Circle(
             location=[data.iloc[i]['lat'], data.iloc[i]['lon']+0.2],
             popup=data.iloc[i]['name'] + ' : ' + data.iloc[i]['prm'],
-            radius=data.iloc[i]['value_p']*300,
+            radius=int(data.iloc[i]['value_p'])*300,
             color='green',
             fill=True,
             fill_color='green'
