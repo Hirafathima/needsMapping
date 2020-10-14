@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, Response, jsonify, send_file, Response, json
 import requests
-from ipyleaflet import *
 
 import numpy as np
 import pandas as pd
