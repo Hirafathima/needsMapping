@@ -125,7 +125,7 @@ for i in map_data['District']:
 # print(p)
 map_data['basic'], map_data['count_basic'], map_data['std'], map_data['count_std'], map_data['prm'], map_data['count_prm'] =basic, count_basic, std, count_std, prm, count_prm
 map_data['basic_link'], map_data['std_link'], map_data['prm_link'] = basic_link, std_link, prm_link
-map_data.to_csv('rest_locations.csv')
+# map_data.to_csv('rest_locations.csv')
 
 
 
@@ -156,18 +156,18 @@ def send_link():
 
 @app.route('/map.html')
 def show_map():
-    data= pd.read_csv('./data_file.csv')
-    Rest_locations= pd.read_csv('./rest_locations.csv')
+#     data= pd.read_csv('./data_file.csv')
+#     Rest_locations= pd.read_csv('./rest_locations.csv')
     data = pd.DataFrame({
-    'lat':Rest_locations['lat'],
-    'lon':Rest_locations['lon'],
-    'name':Rest_locations['District'],
-    'value_b':Rest_locations['count_basic'],
-    'value_s':Rest_locations['count_std'],
-    'value_p':Rest_locations['count_prm'],
-    'basic':Rest_locations['basic'],
-    'std':Rest_locations['std'],
-    'prm':Rest_locations['prm']
+    'lat':map_data['lat'],
+    'lon':map_data['lon'],
+    'name':map_data['District'],
+    'value_b':map_data['count_basic'],
+    'value_s':map_data['count_std'],
+    'value_p':map_data['count_prm'],
+    'basic':map_data['basic'],
+    'std':map_data['std'],
+    'prm':map_data['prm']
     })
     m = folium.Map(location=[10.8505, 76.2711], tiles="OpenStreetMap", zoom_start=6)
     for i in range(0,len(data)):
