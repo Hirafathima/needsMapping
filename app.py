@@ -157,17 +157,17 @@ def send_link():
 @app.route('/map.html')
 def show_map():
 #     data= pd.read_csv('./data_file.csv')
-#     Rest_locations= pd.read_csv('./rest_locations.csv')
+    Rest_locations= map_data
     data = pd.DataFrame({
-    'lat':map_data['lat'],
-    'lon':map_data['lon'],
-    'name':map_data['District'],
-    'value_b':map_data['count_basic'],
-    'value_s':map_data['count_std'],
-    'value_p':map_data['count_prm'],
-    'basic':map_data['basic'],
-    'std':map_data['std'],
-    'prm':map_data['prm']
+    'lat':Rest_locations['lat'],
+    'lon':Rest_locations['lon'],
+    'name':Rest_locations['District'],
+    'value_b':Rest_locations['count_basic'],
+    'value_s':Rest_locations['count_std'],
+    'value_p':Rest_locations['count_prm'],
+    'basic':Rest_locations['basic'],
+    'std':Rest_locations['std'],
+    'prm':Rest_locations['prm']
     })
     m = folium.Map(location=[10.8505, 76.2711], tiles="OpenStreetMap", zoom_start=6)
     for i in range(0,len(data)):
@@ -195,7 +195,7 @@ def show_map():
             fill=True,
             fill_color='green'
         ).add_to(m)
-    m.save('mymap.html')
+    m.save('map.html')
     return m._repr_html_()
 
 
