@@ -17,7 +17,7 @@ with open("objects.py","r") as outfile:
     example = __import__('objects')
 app = Flask(__name__)
 CORS(app, resources={r"/get_dept/*": {"origins": "*"}})
-
+CORS(app, resources={r"/get_links/*": {"origins": "*"}})
 url = "https://jsonbox.io/box_de8dc85dd983aa1882e2"
 r = requests.get(url)
 data = r.json()
