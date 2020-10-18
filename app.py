@@ -153,7 +153,126 @@ map_data.to_csv('rest_locations.csv')
 
 @app.route('/post_survey', methods=['POST'])
 def get_data():
-    app.run()
+    firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://needsmapping.firebaseio.com/'
+    })
+
+    ref = db.reference('users')
+    data = ref.get()
+
+
+    import csv
+
+    data_file = open('data_file.csv', 'w')
+    csv_writer = csv.writer(data_file)
+    count = 0
+
+    for emp in data:
+        r=[]
+        if count == 0:
+        # Writing headers of CSV file
+
+            header =data[emp].keys()
+
+            csv_writer.writerow(header)
+            count += 1
+
+    # Writing data of CSV file
+        for i in header:
+            r.append(data[emp][i])
+        csv_writer.writerow(r)
+
+
+
+    data_file.close()
+    pd.pandas.set_option('display.max_columns', None)
+    data= pd.read_csv('./data_file.csv')
+    locations=pd.DataFrame({"District":data['district'].unique()})
+    locations['District']=locations['District'].apply(lambda x: "" + str(x))
+    lat_lon=[]
+    basic=[]
+    count_basic=[]
+    std=[]
+    count_std=[]
+    prm=[]
+    count_prm=[]
+    basic_link=[]
+    std_link=[]
+    prm_link=[]
+    geolocator=Nominatim(user_agent="app")
+    for location in locations['District']:
+        location = geolocator.geocode(location)
+        if location is None:
+            lat_lon.append(np.nan)
+        else:
+            geo=(location.latitude,location.longitude)
+            lat_lon.append(geo)
+
+    locations['geo_loc']=lat_lon
+    locations.to_csv('locations.csv',index=False)
+
+    map_data = pd.DataFrame(data['district'].value_counts().reset_index())
+    map_data.columns=['District','count']
+    map_data=map_data.merge(locations,on='District',how="left").dropna()
+    lat,lon=zip(*np.array(map_data['geo_loc']))
+    map_data['lat'], map_data['lon'] =lat, lon
+
+
+
+    districts = data['district']
+    m = {}
+    p={}
+
+    for i in map_data['District']:
+        n = {}
+        k = {}
+        q = {}
+        r = {}
+        val = districts.str.contains(i)
+        n = data[val]['basic'].value_counts()
+        k['basic'] = n.to_dict()
+        n = data[val]['standard'].value_counts()
+        k['Standard'] = n.to_dict()
+        n = data[val]['premium'].value_counts()
+        k['Premium'] = n.to_dict()
+        m[i] = k
+    # l[i]={'erkm':{'basic':{'health clinic':[]},'std':{'h':[]},'p':{'u':[]}}}
+
+
+
+        y=list(m[i]['basic'].keys())
+        basic.append(y[0])
+        basic_link.append(example.link[0]['basic'][y[0]])
+        count_basic.append(m[i]['basic'][y[0]])
+        r[y[0]] = example.link[0]['basic'][y[0]]
+        q['basic'] = r
+        r={}
+
+
+
+        y = list(m[i]['Standard'].keys())
+        std.append(y[0])
+        std_link.append(example.link[1]['standard'][y[0]])
+        count_std.append(m[i]['Standard'][y[0]])
+        r[y[0]] = example.link[1]['standard'][y[0]]
+        q['standard'] = r
+        r={}
+
+
+        y = list(m[i]['Premium'].keys())
+        prm.append(y[0])
+        prm_link.append(example.link[2]['premium'][y[0]])
+        count_prm.append(m[i]['Premium'][y[0]])
+        r[y[0]] = example.link[2]['premium'][y[0]]
+        q['premium'] = r
+
+        p[i] = q
+
+# print(p)
+    map_data['basic'], map_data['count_basic'], map_data['std'], map_data['count_std'], map_data['prm'], map_data['count_prm'] =basic, count_basic, std, count_std, prm, count_prm
+    map_data['basic_link'], map_data['std_link'], map_data['prm_link'] = basic_link, std_link, prm_link
+    map_data.to_csv('rest_locations.csv')
+
 
 @app.route('/get_dept')
 def send_data():
