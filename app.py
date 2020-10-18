@@ -352,11 +352,11 @@ def update(x):
     map_data['basic'], map_data['count_basic'], map_data['std'], map_data['count_std'], map_data['prm'], map_data['count_prm'] =basic, count_basic, std, count_std, prm, count_prm
     map_data['basic_link'], map_data['std_link'], map_data['prm_link'] = basic_link, std_link, prm_link
     map_data.to_csv('rest_locations.csv')
-    if(x==0)
+    if x==0:
         return p
-    if(x==1)
+    if x==1:
         return m
-    if(x==2)
+    if x==2:
         return data
 
 @app.route('/post_survey', methods=['POST'])
