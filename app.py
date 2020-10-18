@@ -372,7 +372,7 @@ def send_data():
 
 @app.route('/get_links')
 def send_link():
-    p = update_p(0)
+    p = update(0)
     app_link_json = json.dumps(p)
     return app_link_json
 
