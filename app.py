@@ -154,7 +154,7 @@ map_data.to_csv('rest_locations.csv')
 @app.route('/post_survey', methods=['POST'])
 def get_data():
     data = request.get_json()
-    return "Survey updated", 201
+    return data
 
 @app.route('/get_dept')
 def send_data():
