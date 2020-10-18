@@ -153,12 +153,7 @@ map_data.to_csv('rest_locations.csv')
 
 @app.route('/post_survey', methods=['POST'])
 def get_data():
-    firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://needsmapping.firebaseio.com/'
-    })
-
-    ref = db.reference('users')
-    data = ref.get()
+    app.run()
 
 @app.route('/get_dept')
 def send_data():
