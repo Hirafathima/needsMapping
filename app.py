@@ -151,7 +151,7 @@ map_data.to_csv('rest_locations.csv')
 # def hello(name):
 #     return "Hello {}!".format(name)
 
-@app.route('/post_survey', method=['POST'])
+@app.route('/post_survey', methods=['POST'])
 def get_data():
     data = request.get_json()
     return data
