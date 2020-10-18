@@ -25,10 +25,11 @@ from firebase_admin import db
 # Fetch the service account key JSON file contents
 cred = credentials.Certificate('serviceaccount.json')
 # Initialize the app with a service account, granting admin privileges
-def update():
-    firebase_admin.initialize_app(cred, {
+firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://needsmapping.firebaseio.com/'
     })
+def update():
+    
 
     ref = db.reference('users')
     data = ref.get()
