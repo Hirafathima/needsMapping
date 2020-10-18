@@ -18,10 +18,21 @@ with open("objects.py","r") as outfile:
 app = Flask(__name__)
 CORS(app, resources={r"/get_dept/*": {"origins": "*"}})
 CORS(app, resources={r"/get_links/*": {"origins": "*"}})
-url = "https://jsonbox.io/box_de8dc85dd983aa1882e2"
-r = requests.get(url)
-data = r.json()
-print(data)
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+# Fetch the service account key JSON file contents
+cred = credentials.Certificate('serviceaccount.json')
+# Initialize the app with a service account, granting admin privileges
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://needsmapping.firebaseio.com/'
+})
+
+ref = db.reference('users')
+data = ref.get()
+
+
 import csv
 
 data_file = open('data_file.csv', 'w')
@@ -29,14 +40,21 @@ csv_writer = csv.writer(data_file)
 count = 0
 
 for emp in data:
+    r=[]
     if count == 0:
         # Writing headers of CSV file
-        header = emp.keys()
+
+        header =data[emp].keys()
+
         csv_writer.writerow(header)
         count += 1
 
     # Writing data of CSV file
-    csv_writer.writerow(emp.values())
+    for i in header:
+        r.append(data[emp][i])
+    csv_writer.writerow(r)
+
+
 
 data_file.close()
 pd.pandas.set_option('display.max_columns', None)
