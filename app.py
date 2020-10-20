@@ -9,6 +9,7 @@ from geopy.geocoders import Nominatim
 import folium
 import webbrowser
 import io
+import os
 import random
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import json
@@ -22,25 +23,14 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-from boto.s3.connection import S3Connection
-s3 = S3Connection(os.environ['private_key_id'], os.environ['private_key'], os.environ['client_email'], os.environ['client_id'], os.environ['auth_uri'], os.environ['token_uri'], os.environ['auth_provider_x509_cert_url'], os.environ['client_x509_cert_url'])
+# from boto.s3.connection import S3Connection
+# s3 = S3Connection(os.environ['private_key_id'], os.environ['private_key'], os.environ['client_email'], os.environ['client_id'], os.environ['auth_uri'], os.environ['token_uri'], os.environ['auth_provider_x509_cert_url'], os.environ['client_x509_cert_url'])
 
 
 # with open("config.py","r") as outfile:
 #     config = _import_('config')
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate({
-  "type": "service_account",
-  "project_id": "needsmapping",
-  "private_key_id": private_key_id,
-  "private_key": private_key,
-  "client_email": client_email,
-  "client_id": client_id,
-  "auth_uri": auth_uri,
-  "token_uri": token_uri,
-  "auth_provider_x509_cert_url": auth_provider_x509_cert_url,
-  "client_x509_cert_url": client_x509_cert_url 
-})
+cred = credentials.Certificate('serviceaccount.json')
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://needsmapping.firebaseio.com/'
