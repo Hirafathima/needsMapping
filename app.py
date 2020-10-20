@@ -23,7 +23,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 
 from boto.s3.connection import S3Connection
-s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+s3 = S3Connection(os.environ['private_key_id'], os.environ['private_key'], os.environ['client_email'], os.environ['client_id'], os.environ['auth_uri'], os.environ['token_uri'], os.environ['auth_provider_x509_cert_url'], os.environ['client_x509_cert_url'])
 
 
 # with open("config.py","r") as outfile:
@@ -32,14 +32,14 @@ s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 cred = credentials.Certificate({
   "type": "service_account",
   "project_id": "needsmapping",
-  "private_key_id": S3Connection(os.environ['private_key_id']),
-  "private_key": S3Connection(os.environ['private_key']),
-  "client_email": S3Connection(os.environ['client_email']),
-  "client_id": S3Connection(os.environ['client_id']),
-  "auth_uri": S3Connection(os.environ['auth_uri']),
-  "token_uri": S3Connection(os.environ['token_uri']),
-  "auth_provider_x509_cert_url": S3Connection(os.environ['auth_provider_x509_cert_url']),
-  "client_x509_cert_url": S3Connection(os.environ['client_x509_cert_url'])
+  "private_key_id": private_key_id,
+  "private_key": private_key,
+  "client_email": client_email,
+  "client_id": client_id,
+  "auth_uri": auth_uri,
+  "token_uri": token_uri,
+  "auth_provider_x509_cert_url": auth_provider_x509_cert_url,
+  "client_x509_cert_url": client_x509_cert_url 
 })
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
